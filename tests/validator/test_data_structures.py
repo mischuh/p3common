@@ -22,11 +22,11 @@ def the_dict():
 
 
 def test_returns_true_on_list_is_not_empty(the_list):
-    assert validate.list_is_not_empty(the_list)
+    assert validate.list_not_empty(the_list)
 
 
 def test_returns_failedon_list_is_not_empty():
-    res = validate.list_is_not_empty([])
+    res = validate.list_not_empty([])
     assert not res
     assert isinstance(res, ValidationFailure)
 

@@ -3,7 +3,7 @@ from common.validators.type import is_instance
 
 
 @Validator
-def list_is_not_empty(a_list):
+def list_not_empty(a_list):
     """
     Checks if a list is empty
     :param a_list: a list
