@@ -8,13 +8,13 @@ import itertools
 from collections import OrderedDict
 
 
-class ValidationFailure(object):
+class ValidationException(Exception):
     def __init__(self, func, args):
         self.func = func
         self.__dict__.update(args)
 
     def __repr__(self):
-        return u'ValidationFailure(func={func}, args={args})'.format(
+        return u'ValidationException(func={func}, args={args})'.format(
             func=self.func.__name__,
             args=dict(
                 [(k, v) for (k, v) in self.__dict__.items() if k != 'func']
@@ -24,9 +24,6 @@ class ValidationFailure(object):
     def __str__(self):
         return repr(self)
 
-    def __unicode__(self):
-        return repr(self)
-
     def __bool__(self):
         return False
 
@@ -34,29 +31,11 @@ class ValidationFailure(object):
         return False
 
 
-def func_args_as_dict(func, args, kwargs):
-    """
-    Return given function's positional and key value arguments as an ordered dictionary
-    """
-    arg_names = list(
-        OrderedDict.fromkeys(
-            itertools.chain(
-                inspect.getfullargspec(func)[0],
-                kwargs.keys()
-            )
-        )
-    )
-    return OrderedDict(
-        list(zip(arg_names, args)) +
-        list(kwargs.items())
-    )
-
-
 class Validator(object):
     """
     A decorator that makes given function validator.
     Whenever the given function is called and returns ``False`` value
-    this decorator returns :class:`ValidationFailure` object.
+    this decorator returns :class:`ValidationException` object.
     Example::
         >>> @Validator
         ... def even(value):
@@ -64,7 +43,7 @@ class Validator(object):
         >>> even(4)
         True
         >>> even(5)
-        ValidationFailure(func=even, args={'value': 5})
+        ValidationException(func=even, args={'value': 5})
     """
     def __init__(self, func):
         """
@@ -73,6 +52,23 @@ class Validator(object):
         self.func = func
         functools.update_wrapper(self, func)
 
+    def __func_args_as_dict(self, func, args, kwargs):
+        """
+        Return given function's positional and key value arguments as an ordered dictionary
+        """
+        arg_names = list(
+            OrderedDict.fromkeys(
+                itertools.chain(
+                    inspect.getfullargspec(func)[0],
+                    kwargs.keys()
+                )
+            )
+        )
+        return OrderedDict(
+            list(zip(arg_names, args)) +
+            list(kwargs.items())
+        )
+
     def __call__(self, *args, **kwargs):
         """
         :param args: positional function arguments
@@ -80,8 +76,8 @@ class Validator(object):
         """
         value = self.func(*args, **kwargs)
         if not value:
-            return ValidationFailure(
-                self.func, func_args_as_dict(self.func, args, kwargs)
+            raise ValidationException(
+                self.func, self.__func_args_as_dict(self.func, args, kwargs)
             )
         return True
 

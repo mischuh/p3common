@@ -2,7 +2,7 @@
 import pytest
 
 import common.validators as validate
-from common.validators.utils import ValidationFailure
+from common.validators.utils import ValidationException
 
 
 @pytest.mark.parametrize(('value', 'instance_type'), [
@@ -13,7 +13,7 @@ from common.validators.utils import ValidationFailure
     ((1, 2, 3, 4), tuple),
 ])
 def test_returns_true_on_valid_instance_type(value, instance_type):
-    assert validate.is_instance(value, instance_type)
+    assert validate.is_instance_of(value, instance_type)
 
 
 @pytest.mark.parametrize(('value', 'instance_type'), [
@@ -25,9 +25,8 @@ def test_returns_true_on_valid_instance_type(value, instance_type):
     (None, None)
 ])
 def test_returns_failed_validation_on_invalid_instance_type(value, instance_type):
-    res = validate.is_instance(value, instance_type)
-    assert not res
-    assert isinstance(res, ValidationFailure)
+    with pytest.raises(ValidationException):
+        validate.is_instance_of(value, instance_type)
 
 
 @pytest.mark.parametrize('value', [
@@ -43,7 +42,5 @@ def test_returns_true_on_valid_function(value):
     None
 ])
 def test_returns_true_on_invalid_function(value):
-    res = validate.is_function(value)
-    assert not res
-    assert isinstance(res, ValidationFailure)
-
+    with pytest.raises(ValidationException):
+        validate.is_function(value)

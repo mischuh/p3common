@@ -13,8 +13,8 @@ def uuid(value):
         >>> uuid('2bc1c94f-0deb-43e9-92a1-4775189ec9f8')
         True
         >>> uuid('2bc1c94f 0deb-43e9-92a1-4775189ec9f8')
-        ValidationFailure(func=uuid, ...)
+        ValidationException(func=uuid, ...)
     :param value: UUID string to validate
-    :return: True, if value is valid UUID, otherwise :class:`~validators.utils.ValidationFailure`
+    :return: True, if value is valid UUID, otherwise :class:`~validators.utils.ValidationException`
     """
     return pattern.match(value)
