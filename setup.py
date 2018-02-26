@@ -17,7 +17,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Topic :: Python :: Common',
     ],
-    url='https://github.com/mischuh/python3-common.git',
+    url='https://github.com/mischuh/p3common.git',
     author='Mirko Schuh',
     packages=find_packages(exclude=['docs', 'tests*']),
     install_requires=[
