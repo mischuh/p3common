@@ -13,6 +13,10 @@ Common utility classes
     pip install -Ur requirements-test.txt
     pip install -Ur requirements.txt
 
+## Import
+    from common import validators as validate
+    validate.is_str('Hallo')
+
 ## Build it
     
     python3 setup.py sdist
