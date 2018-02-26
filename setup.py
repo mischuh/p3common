@@ -8,21 +8,22 @@ def readme():
         return f.read()
 
 
-setup(name='python3-common',
-      version=__VERSION__,
-      description='mischus - Python3 Common utility classes',
-      long_description=readme(),
-      classifiers=[
-          'Programming Language :: Python :: 3.6',
-          'Topic :: Python :: Common',
-      ],
-      url='https://github.com/mischuh/python3-common.git',
-      author='Mirko Schuh',
-      packages=find_packages(exclude=['docs', 'tests*']),
-      install_requires=[
-          "decorator>=4.2.1",
-      ],
-      entry_points={
-      },
-      include_package_data=True,
-      zip_safe=False)
+setup(
+    name='p3common',
+    version=__VERSION__,
+    description='mischus - Python3 Common utility classes',
+    long_description=readme(),
+    classifiers=[
+        'Programming Language :: Python :: 3.6',
+        'Topic :: Python :: Common',
+    ],
+    url='https://github.com/mischuh/python3-common.git',
+    author='Mirko Schuh',
+    packages=find_packages(exclude=['docs', 'tests*']),
+    install_requires=[
+        "decorator>=4.2.1",
+    ],
+    python_requires='>=3',
+    include_package_data=True,
+    zip_safe=False
+)
