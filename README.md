@@ -13,3 +13,6 @@ Common utility classes
     pip install -Ur requirements-test.txt
     pip install -Ur requirements.txt
 
+## Build it
+    
+    python3 setup.py sdist
