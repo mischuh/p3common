@@ -7,7 +7,8 @@ def list_not_empty(a_list):
     """
     Checks if a list is empty
     :param a_list: a list
-    :return: True, if list is not empty, otherwise :class:`~validators.utils.ValidationException`
+    :return: True, if list is not empty,
+             otherwise :class:`~validators.utils.ValidationException`
     """
     return not_none(a_list) and len(a_list) > 0
 
@@ -23,9 +24,11 @@ def is_in_list(value, the_list):
         ValidationException(func=is_in_list, ...)
     :param value: value to check
     :param the_list: list of elems
-    :return: True, if value is instance of type, otherwise :class:`~validators.utils.ValidationException`
+    :return: True, if value is instance of type,
+             otherwise :class:`~validators.utils.ValidationException`
     """
-    return not_none(value) and is_instance_of(the_list, list) and value in the_list
+    return not_none(value) and \
+        is_instance_of(the_list, list) and value in the_list
 
 
 @Validator
@@ -39,6 +42,8 @@ def is_in_dict_keys(value, the_dict):
         ValidationException(func=is_in_dict_keys, ...)
     :param value: value to check
     :param the_dict: dictionary to test on
-    :return: True, if value is in dict keys, otherwise :class:`~validators.utils.ValidationException`
+    :return: True, if value is in dict keys,
+             otherwise :class:`~validators.utils.ValidationException`
     """
-    return is_instance_of(the_dict, dict) and is_in_list(value, list(the_dict.keys()))
+    return is_instance_of(the_dict, dict)\
+        and is_in_list(value, list(the_dict.keys()))

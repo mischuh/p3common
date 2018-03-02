@@ -3,7 +3,10 @@ from common import validators as validate
 
 
 def group_by(aggregation_func, list_to_group):
-    """Applies the aggregation_func to every list element to determine a grouping key"""
+    """
+    Applies the aggregation_func to every
+    list element to determine a grouping key
+    """
     validate.is_instance_of(list_to_group, list)
     validate.is_function(aggregation_func)
 
@@ -54,7 +57,8 @@ def merge_dicts(dict1, dict2):
 def safe_list_get(l, idx=0, default=None):
     """
     Helper method to extract one element safely out of a list.
-    When index is out of bounds no exception is thrown, instead the specified default value is returned.
+    When index is out of bounds no exception is thrown,
+    instead the specified default value is returned.
     :param l: The list
     :param idx: Index of the element
     :param default: If the element does not exists return a default value

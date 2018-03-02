@@ -33,7 +33,7 @@ class ValidationException(Exception):
 
 class Validator(object):
     """
-    A decorator that makes given function validator.
+    A decorator that makes given function a validator.
     Whenever the given function is called and returns ``False`` value
     this decorator returns :class:`ValidationException` object.
     Example::
@@ -54,7 +54,8 @@ class Validator(object):
 
     def __func_args_as_dict(self, func, args, kwargs):
         """
-        Return given function's positional and key value arguments as an ordered dictionary
+        Return given function's positional and key value
+        arguments as an ordered dictionary
         """
         arg_names = list(
             OrderedDict.fromkeys(
@@ -74,12 +75,13 @@ class Validator(object):
         :param args: positional function arguments
         :param kwargs: key value function arguments
         """
+        fail_hard = kwargs.pop('fail', True)
         value = self.func(*args, **kwargs)
-        if not value:
+        if not value and fail_hard:
             raise ValidationException(
                 self.func, self.__func_args_as_dict(self.func, args, kwargs)
             )
-        return True
+        return value
 
 
 @Validator
